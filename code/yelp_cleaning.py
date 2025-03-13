@@ -89,13 +89,22 @@ def categorize_food_type(category_list, cuisine_country):
                     return food_type
     return "Other"
 
-# Register UDFs
-categorize_restaurant_udf = udf(categorize_restaurant, StringType())
-categorize_food_type_udf = udf(lambda categories, country: categorize_food_type(categories, country), StringType())
 
-# Apply transformations
+
+# Define UDFs for categorization
+categorize_restaurant_udf = udf(categorize_restaurant, StringType())  # Categorizes by country
+categorize_food_type_udf = udf(categorize_food_type, StringType())    # Categorizes by food type
+
+# Add separate columns
 df_selected = df_selected.withColumn("cuisine_country", categorize_restaurant_udf(col("categories_list")))
-df_selected = df_selected.withColumn("final_category", categorize_food_type_udf(col("categories_list"), col("cuisine_country")))
+df_selected = df_selected.withColumn("food_type", categorize_food_type_udf(col("categories_list")))
+
+# Create final category column: Use country if available, otherwise use food type
+df_selected = df_selected.withColumn(
+    "final_category",
+    when(col("cuisine_country") != "Other", col("cuisine_country"))
+    .otherwise(col("food_type"))
+)
 
 # Show results
 #df_selected.show(truncate=False)
@@ -113,5 +122,5 @@ df_selected.write.csv("/home/ubuntu/Yelp.csv", mode="overwrite", header=True)
 #run this line in ec2
 #cat /home/ubuntu/Yelp.csv/part-* > /home/ubuntu/Yelp_final.csv
 
-#run this line in local terminal
+#run this line in local terminal if needed
 #scp -i ~/Downloads/MGMTMSA405.pem ubuntu@35.92.138.7:/home/ubuntu/Yelp_final.csv ~/Downloads/
