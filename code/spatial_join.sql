@@ -5,11 +5,11 @@ LOAD spatial;
 -- Create Airbnb and Yelp tables
 CREATE TABLE airbnb AS 
 SELECT *, ST_Point(longitude, latitude) AS geom 
-FROM read_csv_auto('team21/data/airbnb.csv');
+FROM read_csv_auto('team21/output/airbnb_cleaned.csv');
 
 CREATE TABLE yelp AS 
 SELECT *, ST_Point(longitude, latitude) AS geom 
-FROM read_csv_auto('team21/data/Yelp_final.csv');
+FROM read_csv_auto('team21/output/yelp_cleaned.csv');
 
 -- Compute distances between all Airbnb and Yelp restaurants
 COPY (
@@ -19,4 +19,4 @@ COPY (
         ST_Distance(a.geom, y.geom) * 100 AS distance_km
     FROM airbnb a
     JOIN yelp y
-) TO 'data/airbnb_yelp_distances.csv' WITH (HEADER, DELIMITER ',');
+) TO 'team21/output/airbnb_yelp_distances.csv' WITH (HEADER, DELIMITER ',');
