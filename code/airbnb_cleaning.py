@@ -88,7 +88,7 @@ df_cleaned = df_cleaned.drop("amenities")
 # Show results
 #df_cleaned.show(truncate=False)
 
-df_cleaned.write.csv("/home/ubuntu/airbnb_full.csv", mode="overwrite", header=True)
+df_cleaned.write.csv("/home/ubuntu/team21/data/airbnb_full.csv", mode="overwrite", header=True)
 
 # run this line in ec2
 # cat /home/ubuntu/airbnb_full.csv/part-* > /home/ubuntu/airbnb.csv
