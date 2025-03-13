@@ -101,4 +101,9 @@ df_selected = df_selected.withColumn("final_category", categorize_food_type_udf(
 #df_selected.show(truncate=False)
 
 df_selected.write.csv("/home/ubuntu/Yelp.csv", mode="overwrite", header=True)
-cat /home/ubuntu/Yelp.csv/part-* > /home/ubuntu/Yelp_final.csv
+
+#run this line in ec2
+#cat /home/ubuntu/Yelp.csv/part-* > /home/ubuntu/Yelp_final.csv
+
+#run this line in local terminal
+#scp -i ~/Downloads/MGMTMSA405.pem ubuntu@35.92.138.7:/home/ubuntu/Yelp_final.csv ~/Downloads/
