@@ -1,3 +1,5 @@
+# CONFIRMED FINISH
+
 from pyspark.sql import SparkSession
 from pyspark.sql.functions import col, regexp_replace, split, when, lit, expr
 from pyspark.sql.types import IntegerType
@@ -93,6 +95,17 @@ df_cleaned.write.csv("/home/ubuntu/airbnb_full.csv", mode="overwrite", header=Tr
 
 #to download, run this line in local terminal
 # scp -i ~/Downloads/MGMTMSA405.pem ubuntu@35.92.138.7:/home/ubuntu/airbnb.csv ~/Downloads/
+# scp -i ~/Downloads/MGMTMSA405.pem ubuntu@35.92.138.7:/home/ubuntu/airbnb.csv ~/Downloads/airbnbtest2.csv
+
+
+
+
+
+
+
+
+
+
 
 
 
