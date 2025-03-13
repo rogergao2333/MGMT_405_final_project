@@ -7,7 +7,7 @@ SPARK=spark-submit
 # Define paths to scripts
 AIRBNB_CLEANER=code/airbnb_cleaning.py
 YELP_CLEANER=code/yelp_cleaning.py
-DUCKDB_QUERIES=code/queries.sql
+DUCKDB_QUERIES=code/spatial_join.sql
 
 # Define input data paths
 AIRBNB_RAW=data/listings17.csv
