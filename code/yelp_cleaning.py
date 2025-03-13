@@ -18,7 +18,7 @@ from pyspark.sql.types import StringType, ArrayType
 spark = SparkSession.builder.appName("YelpProcessing").getOrCreate()
 
 # Load Yelp JSON dataset
-df = spark.read.json("/home/ubuntu/yelp1.json")
+df = spark.read.json("/home/ubuntu/team21/data/yelp1.json")
 
 # Filter for New Orleans and only restaurant-related businesses
 df_filtered = df.filter((col("city") == "New Orleans") & 
