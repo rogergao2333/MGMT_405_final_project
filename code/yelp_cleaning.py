@@ -108,6 +108,7 @@ df_selected = df_selected.withColumn("categories_list", concat_ws(", ", col("cat
 # Save as CSV
 df_selected.write.csv("/home/ubuntu/Yelp.csv", mode="overwrite", header=True)
 
+# then quit()
 
 #run this line in ec2
 #cat /home/ubuntu/Yelp.csv/part-* > /home/ubuntu/Yelp_final.csv
