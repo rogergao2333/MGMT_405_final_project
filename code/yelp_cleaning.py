@@ -100,7 +100,14 @@ df_selected = df_selected.withColumn("final_category", categorize_food_type_udf(
 # Show results
 #df_selected.show(truncate=False)
 
+from pyspark.sql.functions import col, concat_ws
+
+# Convert categories_list (array) to a comma-separated string
+df_selected = df_selected.withColumn("categories_list", concat_ws(", ", col("categories_list")))
+
+# Save as CSV
 df_selected.write.csv("/home/ubuntu/Yelp.csv", mode="overwrite", header=True)
+
 
 #run this line in ec2
 #cat /home/ubuntu/Yelp.csv/part-* > /home/ubuntu/Yelp_final.csv
