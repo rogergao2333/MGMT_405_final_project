@@ -1,6 +1,7 @@
 -- Install and load the spatial extension
 INSTALL spatial;
 LOAD spatial;
+LOAD spatial;
 
 -- Create Airbnb and Yelp tables
 CREATE TABLE airbnb AS 
