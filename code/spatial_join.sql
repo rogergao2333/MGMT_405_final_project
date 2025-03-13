@@ -19,5 +19,5 @@ COPY (
         y.business_id AS yelp_id, 
         ST_Distance(a.geom, y.geom) * 100 AS distance_km
     FROM airbnb a
-    JOIN yelp y
+    CROSS JOIN yelp y
 ) TO 'team21/output/airbnb_yelp_distances.csv' WITH (HEADER, DELIMITER ',');
