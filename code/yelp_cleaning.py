@@ -71,6 +71,28 @@ food_type_mapping = {
 }
 
 # Define UDFs for categorization
+# def categorize_restaurant(category_list):
+#     if category_list is not None:
+#         for category in category_list:
+#             category_lower = category.lower()
+#             for keyword, country in cuisine_mapping.items():
+#                 if keyword.lower() in category_lower:
+#                     return country
+#     return "Other"
+
+# def categorize_food_type(category_list, cuisine_country):
+#     if cuisine_country == "Other" and category_list is not None:
+#         for category in category_list:
+#             category_lower = category.lower()
+#             for keyword, food_type in food_type_mapping.items():
+#                 if keyword.lower() in category_lower:
+#                     return food_type
+#     return "Other"
+
+from pyspark.sql.functions import col, when, udf
+from pyspark.sql.types import StringType
+
+# Define UDF for categorizing by country
 def categorize_restaurant(category_list):
     if category_list is not None:
         for category in category_list:
@@ -80,6 +102,7 @@ def categorize_restaurant(category_list):
                     return country
     return "Other"
 
+# Define UDF for categorizing by food type
 def categorize_food_type(category_list, cuisine_country):
     if cuisine_country == "Other" and category_list is not None:
         for category in category_list:
@@ -89,22 +112,46 @@ def categorize_food_type(category_list, cuisine_country):
                     return food_type
     return "Other"
 
+# Register UDFs
+categorize_restaurant_udf = udf(categorize_restaurant, StringType())
+categorize_food_type_udf = udf(categorize_food_type, StringType())  # Takes 2 arguments
 
-
-# Define UDFs for categorization
-categorize_restaurant_udf = udf(categorize_restaurant, StringType())  # Categorizes by country
-categorize_food_type_udf = udf(categorize_food_type, StringType())    # Categorizes by food type
-
-# Add separate columns
+# Step 1: Categorize by country first
 df_selected = df_selected.withColumn("cuisine_country", categorize_restaurant_udf(col("categories_list")))
-df_selected = df_selected.withColumn("food_type", categorize_food_type_udf(col("categories_list")))
 
-# Create final category column: Use country if available, otherwise use food type
+# Step 2: Categorize by food type (only for rows where cuisine_country == "Other")
+df_selected = df_selected.withColumn("food_type", categorize_food_type_udf(col("categories_list"), col("cuisine_country")))
+
+# Step 3: Final category column: Use country if not "Other", otherwise use food type
 df_selected = df_selected.withColumn(
     "final_category",
     when(col("cuisine_country") != "Other", col("cuisine_country"))
     .otherwise(col("food_type"))
 )
+
+# Show results
+# df_selected.select("cuisine_country", "food_type", "final_category").show(truncate=False)
+
+
+
+
+# from pyspark.sql.functions import col, when
+# from pyspark.sql.types import StringType
+# from pyspark.sql.functions import udf
+# # Define UDFs for categorization
+# categorize_restaurant_udf = udf(categorize_restaurant, StringType())  # Categorizes by country
+# categorize_food_type_udf = udf(categorize_food_type, StringType())    # Categorizes by food type
+
+# # Add separate columns
+# df_selected = df_selected.withColumn("cuisine_country", categorize_restaurant_udf(col("categories_list")))
+# df_selected = df_selected.withColumn("food_type", categorize_food_type_udf(col("categories_list")))
+
+# # Create final category column: Use country if available, otherwise use food type
+# df_selected = df_selected.withColumn(
+#     "final_category",
+#     when(col("cuisine_country") != "Other", col("cuisine_country"))
+#     .otherwise(col("food_type"))
+# )
 
 # Show results
 #df_selected.show(truncate=False)
@@ -124,3 +171,4 @@ df_selected.write.csv("/home/ubuntu/Yelp.csv", mode="overwrite", header=True)
 
 #run this line in local terminal if needed
 #scp -i ~/Downloads/MGMTMSA405.pem ubuntu@35.92.138.7:/home/ubuntu/Yelp_final.csv ~/Downloads/
+#scp -i ~/Downloads/MGMTMSA405.pem ubuntu@35.92.138.7:/home/ubuntu/Yelp_final.csv ~/Downloads/yelptest2.csv
