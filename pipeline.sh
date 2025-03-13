@@ -53,6 +53,11 @@ run_spark() {
 
     $SPARK $YELP_CLEANER $YELP_RAW $CLEANED_YELP
     check "Yelp data cleaned successfully." "Yelp data cleaning FAILED."
+
+    cat $OUTPUT_DIR/airbnb_cleaned.csv/part-* > $OUTPUT_DIR/airbnb_cleaned_final.csv
+    cat $OUTPUT_DIR/yelp_cleaned.csv/part-* > $OUTPUT_DIR/yelp_cleaned_final.csv
+
+    rm -rf $CLEANED_AIRBNB $CLEANED_YELP
 }
 
 # Run DuckDB queries
