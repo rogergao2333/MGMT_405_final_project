@@ -1,3 +1,5 @@
+#CONFIRMED FINISH
+
 #df = spark.read.json("/home/ubuntu/yelp1.json")
 #df_filtered = df.filter(df.city == "New Orleans")
 #df_filtered = df_filtered.filter( (df_filtered.categories.contains("Restaurants")) | (df_filtered.categories.contains("Food")) )
