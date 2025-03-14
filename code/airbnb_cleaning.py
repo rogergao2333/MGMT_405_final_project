@@ -8,11 +8,12 @@ from pyspark.sql.types import IntegerType
 spark = SparkSession.builder.appName("ListingsData").getOrCreate()
 
 # Load CSV file into a DataFrame
+
 df = spark.read.option("header", True) \
                .option("inferSchema", True) \
                .option("multiLine", True) \
                .option("escape", "\"") \
-               .csv("/home/ubuntu/team21/data/listings17.csv")
+               .csv("/home/ubuntu/listings.csv")
 
 # Step 1: Select required columns
 df_selected = df.select(
@@ -109,13 +110,6 @@ df_cleaned.write.csv("/home/ubuntu/team21/output/airbnb_cleaned.csv", mode="over
 
 
 
-# from pyspark.sql import SparkSession
-# spark = SparkSession.builder.appName("ListingsData").getOrCreate()
-# df = spark.read.option("header", True) \
-#                .option("inferSchema", True) \
-#                .option("multiLine", True) \
-#                .option("escape", "\"") \
-#                .csv("/home/ubuntu/listings.csv")
 
 
 
