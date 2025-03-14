@@ -13,8 +13,9 @@ df = spark.read.option("header", True) \
                .option("inferSchema", True) \
                .option("multiLine", True) \
                .option("escape", "\"") \
-               .csv("/home/ubuntu/listings.csv")
-                #.csv("/home/ubuntu/team21/data/listings17.csv")
+                .csv("/home/ubuntu/team21/data/listings17.csv")
+               #.csv("/home/ubuntu/listings.csv")
+              
 
 # Step 1: Select required columns
 df_selected = df.select(
