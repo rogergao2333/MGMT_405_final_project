@@ -17,7 +17,7 @@ YELP_RAW=data/yelp1.json
 OUTPUT_DIR=output
 CLEANED_AIRBNB=$OUTPUT_DIR/airbnb_cleaned.csv
 CLEANED_YELP=$OUTPUT_DIR/yelp_cleaned.csv
-FINAL_DB=$OUTPUT_DIR/airbnb_yelp.db
+DB_FILE=$OUTPUT_DIR/airbnb_yelp.db
 FINAL_OUTPUT=$OUTPUT_DIR/airbnb_yelp_distances.csv
 
 # Rollback function in case of failure
@@ -63,18 +63,8 @@ run_spark() {
 
 # Run DuckDB queries
 run_duckdb() {
-    # Create database and run spatial join
-    $DUCKDB $FINAL_DB < $DUCKDB_QUERIES
-    check "DuckDB query executed successfully." "DuckDB query FAILED."
-
-    # Ensure final output exists
-    if [ -f "$FINAL_OUTPUT" ]; then
-        message "Final output CSV created successfully."
-    else
-        message "Error: airbnb_yelp_distances.csv was NOT created!"
-        rollback
-        exit 1
-    fi
+   $DUCKDB $DB_FILE < $DUCKDB_QUERIES 
+   check "DuckDB query executed successfully." "DuckDB query FAILED."
 }
 
 # Pipeline execution starts here
