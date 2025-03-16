@@ -32,13 +32,13 @@ On the yelp for business website, download the JSON files and we choose to use t
 
 Make sure Data and codes are in the following format:  
 \data  
-<blockquote> listings17.csv  </blockquote>
-<blockquote> yelp1.json </blockquote>
+  listings17.csv
+  yelp1.json
 \code  
-<blockquote>	airbnb_cleaning.py  </blockquote>
-<blockquote>	yelp_cleaning.py  </blockquote>
-<blockquote>	spatial_join.sql  </blockquote>
-<blockquote>    pipeline.sh  </blockquote>
+  airbnb_cleaning.py
+  yelp_cleaning.py
+  spatial_join.sql
+  pipeline.sh
 
 And then run the following line in the repository that contains all the above files
 
