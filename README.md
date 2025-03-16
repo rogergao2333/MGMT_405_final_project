@@ -32,24 +32,24 @@ On the yelp for business website, download the JSON files and we choose to use t
 
 Make sure Data and codes are in the following format:  
 \data  
-	listings17.csv  
-	yelp1.json  
+<blockquote> listings17.csv  </blockquote>
+<blockquote> yelp1.json </blockquote>
 \code  
-	airbnb_cleaning.py  
-	yelp_cleaning.py  
-	spatial_join.sql  
-pipeline.sh  
+<blockquote>	airbnb_cleaning.py  </blockquote>
+<blockquote>	yelp_cleaning.py  </blockquote>
+<blockquote>	spatial_join.sql  </blockquote>
+<blockquote>    pipeline.sh  </blockquote>
 
 And then run the following line in the repository that contains all the above files
 
 bash pipeline.sh
 
-The above code should create an output directory and should give you four files in the following structure:
-\output
-	airbnb_cleaned_final.csv  
-airbnb_yelp.db  
-airbnb_yelp_distances.csv  
-Yelp_cleaned_final.csv
+The above code should create an output directory and should give you four files in the following structure:  
+\output  
+<blockquote>	airbnb_cleaned_final.csv  </blockquote>
+<blockquote> airbnb_yelp.db  </blockquote>
+<blockquote> airbnb_yelp_distances.csv  </blockquote>
+<blockquote> Yelp_cleaned_final.csv </blockquote>
 
 3.Visualization
 
