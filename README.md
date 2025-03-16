@@ -85,6 +85,8 @@ Please click here to access our dashboard: https://public.tableau.com/app/profil
 
 ## 4.Analysis
 
+The Python Notebook to do the analysis is under `code` folder, named as  `405analysis.ipynb`.
+
 This analysis utilizes python to explore the relationship between Airbnb pricing and restaurant availability across different neighborhoods. The key takeaways from the study are as follows:
 
 ### Key Results
